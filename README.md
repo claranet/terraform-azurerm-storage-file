@@ -154,7 +154,7 @@ module "storage_file" {
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Additional tags to associate with your Azure Container Registry. | `map(string)` | `{}` | no |
 | file\_shares | List of objects to create some File Shares in this Storage Account. | <pre>list(object({<br>    name             = string<br>    quota_in_gb      = number<br>    enabled_protocol = optional(string)<br>    metadata         = optional(map(string))<br>    acl = optional(list(object({<br>      id          = string<br>      permissions = string<br>      start       = optional(string)<br>      expiry      = optional(string)<br>    })))<br>  }))</pre> | n/a | yes |
-| https\_traffic\_only\_enabled | Boolean flag which forces HTTPS if enabled. | `bool` | `true` | no |
+| https\_traffic\_only\_enabled | Boolean flag which forces HTTPS if enabled. Disabled if any NFS file share is provisioned. | `bool` | `true` | no |
 | identity\_ids | Specifies a list of User Assigned Managed Identity IDs to be assigned to this Storage Account. | `list(string)` | `null` | no |
 | identity\_type | Specifies the type of Managed Service Identity that should be configured on this Storage Account. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned` (to enable both). | `string` | `"SystemAssigned"` | no |
 | is\_premium | True to enable `Premium` tier for this Storage Account. | `bool` | `true` | no |
@@ -180,10 +180,13 @@ module "storage_file" {
 
 | Name | Description |
 |------|-------------|
+| cifs\_credentials\_file\_content | Content of the CIFS credentials file |
+| default\_cifs\_configuration\_file\_path | Default configuration file path for CIFS credentials file |
 | storage\_account\_id | Created storage account ID |
 | storage\_account\_identity | Created Storage Account identity block |
 | storage\_account\_name | Created storage account name |
 | storage\_account\_network\_rules | Network rules of the associated Storage Account |
 | storage\_account\_properties | Created Storage Account properties |
 | storage\_file\_shares | Created file shares in the Storage Account |
+| storage\_file\_shares\_mount\_options | Mount options for the file shares |
 <!-- END_TF_DOCS -->

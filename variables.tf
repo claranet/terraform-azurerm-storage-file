@@ -44,7 +44,7 @@ variable "account_replication_type" {
 }
 
 variable "https_traffic_only_enabled" {
-  description = "Boolean flag which forces HTTPS if enabled."
+  description = "Boolean flag which forces HTTPS if enabled. Disabled if any NFS file share is provisioned."
   type        = bool
   default     = true
 }
