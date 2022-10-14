@@ -5,12 +5,12 @@ output "storage_account_properties" {
 }
 
 output "storage_account_id" {
-  description = "Created storage account ID"
+  description = "Created Storage Account ID"
   value       = module.storage_account.storage_account_id
 }
 
 output "storage_account_name" {
-  description = "Created storage account name"
+  description = "Created Storage Account name"
   value       = module.storage_account.storage_account_name
 }
 

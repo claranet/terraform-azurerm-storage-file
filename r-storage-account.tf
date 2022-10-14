@@ -1,7 +1,7 @@
 module "storage_account" {
   #  source  = "claranet/storage-account/azurerm"
   #  version = "7.0.1"
-  source = "git::ssh://git@git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/storage-account.git?ref=AZ-869-fix-pitr"
+  source = "git::ssh://git@git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/storage-account.git?ref=AZ-869-share-properties"
 
   location       = var.location
   location_short = var.location_short
