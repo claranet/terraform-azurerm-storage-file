@@ -12,4 +12,9 @@ EOF
     "rw,noatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=600,acregmax=600,acdirmin=600,acdirmax=600" :
     "nofail,credentials=${local.cifs_creds_file_path},dir_mode=0777,file_mode=0777,serverino,nosharesock,actimeo=30"
   }
+
+  smb_properties = var.is_premium ? merge(
+    { multichannel_enabled = true },
+    var.file_share_properties_smb == null ? {} : tomap(var.file_share_properties_smb)
+  ) : var.file_share_properties_smb == null ? null : tomap(var.file_share_properties_smb)
 }

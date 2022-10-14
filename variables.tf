@@ -131,6 +131,36 @@ variable "file_shares" {
   }))
 }
 
+variable "file_share_cors_rules" {
+  description = "Storage Account file shares CORS rule. Please refer to the [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#cors_rule) for more information."
+  type = object({
+    allowed_headers    = list(string)
+    allowed_methods    = list(string)
+    allowed_origins    = list(string)
+    exposed_headers    = list(string)
+    max_age_in_seconds = number
+  })
+  default = null
+}
+
+variable "file_share_retention_policy_in_days" {
+  description = "Storage Account file shares retention policy in days."
+  type        = number
+  default     = null
+}
+
+variable "file_share_properties_smb" {
+  description = "Storage Account file shares smb properties. Multichannel is enabled by default on Premium Storage Accounts."
+  type = object({
+    versions                        = optional(list(string), null)
+    authentication_types            = optional(list(string), null)
+    kerberos_ticket_encryption_type = optional(list(string), null)
+    channel_encryption_type         = optional(list(string), null)
+    multichannel_enabled            = optional(string, null)
+  })
+  default = null
+}
+
 # Backup
 
 variable "backup_policy_id" {

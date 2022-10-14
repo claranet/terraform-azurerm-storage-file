@@ -14,7 +14,7 @@ resource "azurerm_backup_container_storage_account" "backup" {
 }
 
 resource "azurerm_backup_protected_file_share" "backup" {
-  for_each = toset(var.backup_policy_id != null ? compact([for s in var.file_shares : s.enabled_protocol != "NFS" ? s.name : ""]) : [])
+  for_each = toset(var.backup_policy_id != null ? [for s in var.file_shares : s.name if s.enabled_protocol != "NFS"] : [])
 
   backup_policy_id          = var.backup_policy_id
   recovery_vault_name       = local.backup_vault_name

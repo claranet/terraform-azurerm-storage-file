@@ -28,6 +28,10 @@ module "storage_account" {
 
   file_shares = var.file_shares
 
+  file_share_cors_rules               = var.file_share_cors_rules
+  file_share_retention_policy_in_days = var.file_share_retention_policy_in_days
+  file_share_properties_smb           = local.smb_properties
+
   storage_blob_data_protection = null
   storage_blob_cors_rule       = null
 

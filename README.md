@@ -130,7 +130,7 @@ module "storage_file" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| storage\_account | git::ssh://git@git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/storage-account.git | AZ-869-fix-pitr |
+| storage\_account | git::ssh://git@git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/storage-account.git | AZ-869-share-properties |
 
 ## Resources
 
@@ -153,6 +153,9 @@ module "storage_file" {
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Additional tags to associate with your Azure Container Registry. | `map(string)` | `{}` | no |
+| file\_share\_cors\_rules | Storage Account file shares CORS rule. Please refer to the [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#cors_rule) for more information. | <pre>object({<br>    allowed_headers    = list(string)<br>    allowed_methods    = list(string)<br>    allowed_origins    = list(string)<br>    exposed_headers    = list(string)<br>    max_age_in_seconds = number<br>  })</pre> | `null` | no |
+| file\_share\_properties\_smb | Storage Account file shares smb properties. Multichannel is enabled by default on Premium Storage Accounts. | <pre>object({<br>    versions                        = optional(list(string), null)<br>    authentication_types            = optional(list(string), null)<br>    kerberos_ticket_encryption_type = optional(list(string), null)<br>    channel_encryption_type         = optional(list(string), null)<br>    multichannel_enabled            = optional(string, null)<br>  })</pre> | `null` | no |
+| file\_share\_retention\_policy\_in\_days | Storage Account file shares retention policy in days. | `number` | `null` | no |
 | file\_shares | List of objects to create some File Shares in this Storage Account. | <pre>list(object({<br>    name             = string<br>    quota_in_gb      = number<br>    enabled_protocol = optional(string)<br>    metadata         = optional(map(string))<br>    acl = optional(list(object({<br>      id          = string<br>      permissions = string<br>      start       = optional(string)<br>      expiry      = optional(string)<br>    })))<br>  }))</pre> | n/a | yes |
 | https\_traffic\_only\_enabled | Boolean flag which forces HTTPS if enabled. Disabled if any NFS file share is provisioned. | `bool` | `true` | no |
 | identity\_ids | Specifies a list of User Assigned Managed Identity IDs to be assigned to this Storage Account. | `list(string)` | `null` | no |
