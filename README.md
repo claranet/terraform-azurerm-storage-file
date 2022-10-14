@@ -123,7 +123,7 @@ module "storage_file" {
 
 | Name | Version |
 |------|---------|
-| azurerm | ~> 3.22 |
+| azurerm | ~> 3.25 |
 
 ## Modules
 
