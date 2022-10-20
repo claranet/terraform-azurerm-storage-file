@@ -89,3 +89,25 @@ module "storage_file" {
     foo = "bar"
   }
 }
+
+# Sample Cloud Init script that can be used in a VM or VMSS custom data
+locals {
+  # tflint-ignore: terraform_unused_declarations
+  cloud_init_script = <<EOC
+#!/bin/bash
+
+apt install -o DPkg::Lock::Timeout=120 -y nfs-common cifs-utils
+
+mkdir -p $(dirname ${module.storage_file.default_cifs_configuration_file_path})
+echo "${module.storage_file.cifs_credentials_file_content}"  > ${module.storage_file.default_cifs_configuration_file_path}
+
+mkdir -p ${module.storage_file.storage_file_shares_default_mount_paths["share-smb"]}
+mkdir -p ${module.storage_file.storage_file_shares_default_mount_paths["share-nfs"]}
+
+echo "${module.storage_file.storage_file_shares_default_fstab_entries["share-smb"]}" >> /etc/fstab
+echo "${module.storage_file.storage_file_shares_default_fstab_entries["share-nfs"]}" >> /etc/fstab
+
+mount ${module.storage_file.storage_file_shares_default_mount_paths["share-smb"]}
+mount ${module.storage_file.storage_file_shares_default_mount_paths["share-nfs"]}}
+EOC
+}

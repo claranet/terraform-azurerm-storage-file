@@ -117,6 +117,28 @@ module "storage_file" {
     foo = "bar"
   }
 }
+
+# Sample Cloud Init script that can be used in a VM or VMSS custom data
+locals {
+  # tflint-ignore: terraform_unused_declarations
+  cloud_init_script = <<EOC
+#!/bin/bash
+
+apt install -o DPkg::Lock::Timeout=120 -y nfs-common cifs-utils
+
+mkdir -p $(dirname ${module.storage_file.default_cifs_configuration_file_path})
+echo "${module.storage_file.cifs_credentials_file_content}"  > ${module.storage_file.default_cifs_configuration_file_path}
+
+mkdir -p ${module.storage_file.storage_file_shares_default_mount_paths["share-smb"]}
+mkdir -p ${module.storage_file.storage_file_shares_default_mount_paths["share-nfs"]}
+
+echo "${module.storage_file.storage_file_shares_default_fstab_entries["share-smb"]}" >> /etc/fstab
+echo "${module.storage_file.storage_file_shares_default_fstab_entries["share-nfs"]}" >> /etc/fstab
+
+mount ${module.storage_file.storage_file_shares_default_mount_paths["share-smb"]}
+mount ${module.storage_file.storage_file_shares_default_mount_paths["share-nfs"]}}
+EOC
+}
 ```
 
 ## Providers
@@ -153,8 +175,8 @@ module "storage_file" {
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Additional tags to associate with your Azure Storage Account. | `map(string)` | `{}` | no |
 | file\_share\_cors\_rules | Storage Account file shares CORS rule. Please refer to the [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#cors_rule) for more information. | <pre>object({<br>    allowed_headers    = list(string)<br>    allowed_methods    = list(string)<br>    allowed_origins    = list(string)<br>    exposed_headers    = list(string)<br>    max_age_in_seconds = number<br>  })</pre> | `null` | no |
-| file\_share\_properties\_smb | Storage Account file shares smb properties. Multichannel is enabled by default on Premium Storage Accounts. | <pre>object({<br>    versions                        = optional(list(string), null)<br>    authentication_types            = optional(list(string), null)<br>    kerberos_ticket_encryption_type = optional(list(string), null)<br>    channel_encryption_type         = optional(list(string), null)<br>    multichannel_enabled            = optional(string, null)<br>  })</pre> | `null` | no |
-| file\_share\_retention\_policy\_in\_days | Storage Account file shares retention policy in days. | `number` | `null` | no |
+| file\_share\_properties\_smb | Storage Account file shares smb properties. Multichannel is enabled by default on Premium Storage Accounts. | <pre>object({<br>    versions                        = optional(list(string), null)<br>    authentication_types            = optional(list(string), null)<br>    kerberos_ticket_encryption_type = optional(list(string), null)<br>    channel_encryption_type         = optional(list(string), null)<br>    multichannel_enabled            = optional(bool, null)<br>  })</pre> | `null` | no |
+| file\_share\_retention\_policy\_in\_days | Storage Account file shares retention policy in days. | `number` | `14` | no |
 | file\_shares | List of objects to create some File Shares in this Storage Account. | <pre>list(object({<br>    name             = string<br>    quota_in_gb      = number<br>    enabled_protocol = optional(string)<br>    metadata         = optional(map(string))<br>    acl = optional(list(object({<br>      id          = string<br>      permissions = string<br>      start       = optional(string)<br>      expiry      = optional(string)<br>    })))<br>  }))</pre> | n/a | yes |
 | https\_traffic\_only\_enabled | Boolean flag which forces HTTPS if enabled. Disabled if any NFS file share is provisioned. | `bool` | `true` | no |
 | identity\_ids | Specifies a list of User Assigned Managed Identity IDs to be assigned to this Storage Account. | `list(string)` | `null` | no |
@@ -190,6 +212,9 @@ module "storage_file" {
 | storage\_account\_network\_rules | Network rules of the associated Storage Account |
 | storage\_account\_properties | Created Storage Account properties |
 | storage\_file\_shares | Created file shares in the Storage Account |
-| storage\_file\_shares\_mount\_commands | Mount commands for the file shares |
+| storage\_file\_shares\_default\_fstab\_entries | Default fstab entries for the file shares |
+| storage\_file\_shares\_default\_mount\_commands | Default mount commands for the file shares |
+| storage\_file\_shares\_default\_mount\_paths | Default mount paths for the file shares |
+| storage\_file\_shares\_mount\_endpoints | Mount endpoints of created file shares |
 | storage\_file\_shares\_mount\_options | Mount options for the file shares |
 <!-- END_TF_DOCS -->

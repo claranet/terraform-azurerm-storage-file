@@ -29,14 +29,29 @@ output "storage_file_shares" {
   value       = module.storage_account.storage_file_shares
 }
 
+output "storage_file_shares_mount_endpoints" {
+  description = "Mount endpoints of created file shares"
+  value       = local.mount_endpoints
+}
+
 output "storage_file_shares_mount_options" {
   description = "Mount options for the file shares"
   value       = local.mount_options
 }
 
-output "storage_file_shares_mount_commands" {
-  description = "Mount commands for the file shares"
+output "storage_file_shares_default_fstab_entries" {
+  description = "Default fstab entries for the file shares"
+  value       = local.fstab_entries
+}
+
+output "storage_file_shares_default_mount_commands" {
+  description = "Default mount commands for the file shares"
   value       = local.mount_cmds
+}
+
+output "storage_file_shares_default_mount_paths" {
+  description = "Default mount paths for the file shares"
+  value       = local.mount_paths
 }
 
 output "default_cifs_configuration_file_path" {

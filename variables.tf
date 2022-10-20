@@ -148,7 +148,7 @@ variable "file_share_cors_rules" {
 variable "file_share_retention_policy_in_days" {
   description = "Storage Account file shares retention policy in days."
   type        = number
-  default     = null
+  default     = 14
 }
 
 variable "file_share_properties_smb" {
@@ -158,7 +158,7 @@ variable "file_share_properties_smb" {
     authentication_types            = optional(list(string), null)
     kerberos_ticket_encryption_type = optional(list(string), null)
     channel_encryption_type         = optional(list(string), null)
-    multichannel_enabled            = optional(string, null)
+    multichannel_enabled            = optional(bool, null)
   })
   default = null
 }
