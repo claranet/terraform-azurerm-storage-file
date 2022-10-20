@@ -190,5 +190,6 @@ module "storage_file" {
 | storage\_account\_network\_rules | Network rules of the associated Storage Account |
 | storage\_account\_properties | Created Storage Account properties |
 | storage\_file\_shares | Created file shares in the Storage Account |
+| storage\_file\_shares\_mount\_commands | Mount commands for the file shares |
 | storage\_file\_shares\_mount\_options | Mount options for the file shares |
 <!-- END_TF_DOCS -->

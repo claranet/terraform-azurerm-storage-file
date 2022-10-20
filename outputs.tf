@@ -34,6 +34,11 @@ output "storage_file_shares_mount_options" {
   value       = local.mount_options
 }
 
+output "storage_file_shares_mount_commands" {
+  description = "Mount commands for the file shares"
+  value       = local.mount_cmds
+}
+
 output "default_cifs_configuration_file_path" {
   description = "Default configuration file path for CIFS credentials file"
   value       = local.cifs_creds_file_path
