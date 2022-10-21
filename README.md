@@ -151,7 +151,7 @@ EOC
 
 | Name | Source | Version |
 |------|--------|---------|
-| storage\_account | git::ssh://git@git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/storage-account.git | AZ-869-share-properties |
+| storage\_account | claranet/storage-account/azurerm | 7.1.0 |
 
 ## Resources
 
