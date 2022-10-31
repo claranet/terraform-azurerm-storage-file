@@ -78,7 +78,7 @@ variable "identity_ids" {
 # Storage Firewall
 
 variable "network_rules_enabled" {
-  description = "Boolean to enable Network Rules on the Storage Account, requires `network_bypass`, `ip_rules`, `subnet_ids` or `default_firewall_action` correctly set if enabled."
+  description = "Boolean to enable Network Rules on the Storage Account, requires `network_bypass`, `allowed_cidrs`, `subnet_ids` or `default_firewall_action` correctly set if enabled."
   type        = bool
   default     = true
 }
