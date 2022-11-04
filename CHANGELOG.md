@@ -1,4 +1,4 @@
-# Unreleased
+# v7.0.1 - 2022-11-04
 
 Fixed
   * AZ-869: Fix variable description
