@@ -2,6 +2,7 @@
 
 Changed
   * AZ-908: Use the new data source for CAF naming (instead of resource)
+  * AZ-901: Change default value for variable `network_bypass` to allow `Logging, Metrics, AzureServices`
 
 # v7.0.1 - 2022-11-04
 

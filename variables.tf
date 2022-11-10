@@ -86,7 +86,7 @@ variable "network_rules_enabled" {
 variable "network_bypass" {
   description = "Specifies whether traffic is bypassed for 'Logging', 'Metrics', 'AzureServices' or 'None'."
   type        = list(string)
-  default     = ["None"]
+  default     = ["Logging", "Metrics", "AzureServices"]
 }
 
 variable "allowed_cidrs" {
