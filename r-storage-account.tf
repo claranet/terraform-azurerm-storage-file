@@ -1,6 +1,6 @@
 module "storage_account" {
   source  = "claranet/storage-account/azurerm"
-  version = "7.1.0"
+  version = "7.2.0"
 
   location       = var.location
   location_short = var.location_short
@@ -30,6 +30,7 @@ module "storage_account" {
   file_share_cors_rules               = var.file_share_cors_rules
   file_share_retention_policy_in_days = var.file_share_retention_policy_in_days
   file_share_properties_smb           = local.smb_properties
+  file_share_authentication           = var.file_share_authentication
 
   storage_blob_data_protection = null
   storage_blob_cors_rule       = null

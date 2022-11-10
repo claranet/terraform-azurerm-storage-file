@@ -169,3 +169,35 @@ variable "backup_policy_id" {
   description = "ID of the Recovery Services Vault policy for file share backups."
   type        = string
 }
+
+variable "file_share_authentication" {
+  description = "Storage Account file shares authentication configuration."
+  type = object({
+    directory_type = string
+    active_directory = optional(object({
+      storage_sid         = string
+      domain_name         = string
+      domain_sid          = string
+      domain_guid         = string
+      forest_name         = string
+      netbios_domain_name = string
+    }))
+  })
+  default = null
+
+  validation {
+    condition = var.file_share_authentication == null || (
+      contains(["AADDS", "AD", ""], try(var.file_share_authentication.directory_type, ""))
+    )
+    error_message = "`file_share_authentication.directory_type` can only be `AADDS` or `AD`."
+  }
+  validation {
+    condition = var.file_share_authentication == null || (
+      try(var.file_share_authentication.directory_type, null) == "AADDS" || (
+        try(var.file_share_authentication.directory_type, null) == "AD" &&
+        try(var.file_share_authentication.active_directory, null) != null
+      )
+    )
+    error_message = "`file_share_authentication.active_directory` block is required when `file_share_authentication.directory_type` is set to `AD`."
+  }
+}

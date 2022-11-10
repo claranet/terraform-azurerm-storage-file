@@ -1,5 +1,8 @@
 # Unreleased
 
+Added
+  * AZ-871: Add Azure File authentication block (AD/AADDS)
+
 Changed
   * AZ-908: Use the new data source for CAF naming (instead of resource)
   * AZ-901: Change default value for variable `network_bypass` to allow `Logging, Metrics, AzureServices`
