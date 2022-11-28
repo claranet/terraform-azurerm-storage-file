@@ -1,4 +1,4 @@
-# Unreleased
+# v7.1.0 - 2022-11-28
 
 Added
   * AZ-871: Add Azure File authentication block (AD/AADDS)
