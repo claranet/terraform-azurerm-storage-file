@@ -85,6 +85,10 @@ module "storage_file" {
     }
   ]
 
+  file_share_authentication = {
+    directory_type = "AADDS"
+  }
+
   extra_tags = {
     foo = "bar"
   }
