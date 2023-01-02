@@ -4,8 +4,8 @@ locals {
 
   smb_properties = var.is_premium ? merge(
     { multichannel_enabled = true },
-    var.file_share_properties_smb == null ? {} : var.file_share_properties_smb
-  ) : var.file_share_properties_smb == null ? null : var.file_share_properties_smb
+    var.file_share_properties_smb == null ? {} : object(var.file_share_properties_smb)
+  ) : var.file_share_properties_smb == null ? null : object(var.file_share_properties_smb)
 
   cifs_creds_file_path    = format("/etc/smbcredentials/%s.cred", module.storage_account.storage_account_name)
   cifs_creds_file_content = <<-EOF
