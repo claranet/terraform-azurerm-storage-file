@@ -2,9 +2,13 @@ locals {
   backup_vault_name = try(split("/", var.backup_policy_id)[8], null)
   backup_vault_rg   = try(split("/", var.backup_policy_id)[4], null)
 
-  smb_properties = var.is_premium ? var.file_share_properties_smb.multichannel_enabled == null ? merge(
-    var.file_share_properties_smb, { multichannel_enabled = true }
-  ) : var.file_share_properties_smb : var.file_share_properties_smb == {} ? null : var.file_share_properties_smb
+  smb_properties = {
+    versions                        = try(var.file_share_properties_smb.versions, null)
+    authentication_types            = try(var.file_share_properties_smb.authentication_types, null)
+    kerberos_ticket_encryption_type = try(var.file_share_properties_smb.kerberos_ticket_encryption_type, null)
+    channel_encryption_type         = try(var.file_share_properties_smb.channel_encryption_type, null)
+    multichannel_enabled            = try(var.file_share_properties_smb.multichannel_enabled, var.is_premium)
+  }
 
 
   cifs_creds_file_path    = format("/etc/smbcredentials/%s.cred", module.storage_account.storage_account_name)
