@@ -1,3 +1,8 @@
+# Unreleased
+
+Fixed
+  * AZ-967: Fix bug with tomap on variable
+
 # v7.1.0 - 2022-11-28
 
 Added
