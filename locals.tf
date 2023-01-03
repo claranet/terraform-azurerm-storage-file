@@ -1,6 +1,6 @@
 locals {
-  backup_vault_name = split("/", var.backup_policy_id)[8]
-  backup_vault_rg   = split("/", var.backup_policy_id)[4]
+  backup_vault_name = try(split("/", var.backup_policy_id)[8], null)
+  backup_vault_rg   = try(split("/", var.backup_policy_id)[4], null)
 
   smb_properties = var.is_premium ? var.file_share_properties_smb.multichannel_enabled == null ? merge(
     var.file_share_properties_smb, { multichannel_enabled = true }

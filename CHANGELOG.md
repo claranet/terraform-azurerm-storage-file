@@ -2,6 +2,7 @@
 
 Fixed
   * AZ-967: Fix bug with tomap on variable
+  * AZ-969: Fix issue when backup_policy_id is set to `null`
 
 # v7.1.0 - 2022-11-28
 
