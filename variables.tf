@@ -160,7 +160,7 @@ variable "file_share_properties_smb" {
     channel_encryption_type         = optional(list(string), null)
     multichannel_enabled            = optional(bool, null)
   })
-  default = {}
+  default = null
 }
 
 # Backup
