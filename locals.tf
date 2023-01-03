@@ -2,10 +2,10 @@ locals {
   backup_vault_name = split("/", var.backup_policy_id)[8]
   backup_vault_rg   = split("/", var.backup_policy_id)[4]
 
-  smb_properties = var.is_premium ? merge(
-    { multichannel_enabled = true },
-    var.file_share_properties_smb == null ? {} : object(var.file_share_properties_smb)
-  ) : var.file_share_properties_smb == null ? null : object(var.file_share_properties_smb)
+  smb_properties = var.is_premium ? var.file_share_properties_smb.multichannel_enabled == null ? merge(
+    var.file_share_properties_smb, { multichannel_enabled = true }
+  ) : var.file_share_properties_smb : var.file_share_properties_smb == {} ? null : var.file_share_properties_smb
+
 
   cifs_creds_file_path    = format("/etc/smbcredentials/%s.cred", module.storage_account.storage_account_name)
   cifs_creds_file_content = <<-EOF
