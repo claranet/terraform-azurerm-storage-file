@@ -1,4 +1,4 @@
-# Unreleased
+# v7.1.1 - 2023-01-13
 
 Fixed
   * AZ-967: Fix variable `smb_properties` override
