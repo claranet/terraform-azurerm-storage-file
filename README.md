@@ -149,7 +149,7 @@ EOC
 
 | Name | Version |
 |------|---------|
-| azurerm | ~> 3.25 |
+| azurerm | ~> 3.36 |
 
 ## Modules
 
