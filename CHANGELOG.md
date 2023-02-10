@@ -1,4 +1,4 @@
-# Unreleased
+# v7.1.2 - 2023-02-10
 
 Fixed
   * AZ-995: Bump `storage-account` to `v7.4.x`
