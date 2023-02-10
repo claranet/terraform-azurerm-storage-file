@@ -1,3 +1,10 @@
+# Unreleased
+
+Fixed
+  * AZ-995: Bump `storage-account` to `v7.4.x`
+  * AZ-997: Fix `storage_blob_data_protection` value
+  * AZ-997: Bump minimum `azurerm` version to `v3.36`
+
 # v7.1.1 - 2023-01-13
 
 Fixed
