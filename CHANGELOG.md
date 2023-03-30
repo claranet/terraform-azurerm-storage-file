@@ -1,4 +1,4 @@
-# Unreleased
+# v7.2.0 - 2023-03-30
 
 Added
   * AZ-1040: Enable nconnect in NFS mount options
