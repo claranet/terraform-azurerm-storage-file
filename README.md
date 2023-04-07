@@ -54,8 +54,8 @@ module "rg" {
   stack       = var.stack
 }
 
-module "logs" {
-  source  = "claranet/run/azurerm//modules/logs"
+module "run" {
+  source  = "claranet/run/azurerm"
   version = "x.x.x"
 
   client_name         = var.client_name
@@ -64,24 +64,13 @@ module "logs" {
   location            = module.azure_region.location
   location_short      = module.azure_region.location_short
   resource_group_name = module.rg.resource_group_name
-}
 
-module "backup" {
-  source  = "claranet/run-iaas/azurerm//modules/backup"
-  version = "x.x.x"
+  monitoring_function_enabled = false
+  vm_monitoring_enabled       = false
+  backup_vm_enabled           = false
+  update_center_enabled       = false
 
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  client_name    = var.client_name
-  environment    = var.environment
-  stack          = var.stack
-
-  resource_group_name = module.rg.resource_group_name
-
-  logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
-  ]
+  backup_file_share_enabled = true
 }
 
 module "storage_file" {
@@ -99,11 +88,11 @@ module "storage_file" {
   account_replication_type = "LRS"
 
   logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+    module.run.logs_storage_account_id,
+    module.run.log_analytics_workspace_id
   ]
 
-  backup_policy_id = module.backup.file_share_backup_policy_id
+  backup_policy_id = module.run.file_share_backup_policy_id
 
   allowed_cidrs  = [format("%s/32", data.http.ip.response_body)]
   network_bypass = ["AzureServices"] # Mandatory for backup purpose
