@@ -1,7 +1,6 @@
 module "storage_account" {
-  #  source  = "claranet/storage-account/azurerm"
-  #  version = "~> 7.4.0"
-  source = "git::ssh://git@git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/storage-account.git?ref=AZ-1065-add-private-link-access"
+  source  = "claranet/storage-account/azurerm"
+  version = "~> 7.6.0"
 
   location       = var.location
   location_short = var.location_short

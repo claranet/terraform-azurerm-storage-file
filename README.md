@@ -151,7 +151,7 @@ EOC
 
 | Name | Source | Version |
 |------|--------|---------|
-| storage\_account | git::ssh://git@git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/storage-account.git | AZ-1065-add-private-link-access |
+| storage\_account | claranet/storage-account/azurerm | ~> 7.6.0 |
 
 ## Resources
 
