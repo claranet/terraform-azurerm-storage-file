@@ -1,6 +1,6 @@
 module "storage_account" {
   source  = "claranet/storage-account/azurerm"
-  version = "~> 7.4.0"
+  version = "~> 7.6.0"
 
   location       = var.location
   location_short = var.location_short
@@ -46,6 +46,7 @@ module "storage_account" {
   subnet_ids              = var.subnet_ids
   allowed_cidrs           = var.allowed_cidrs
   network_bypass          = var.network_bypass
+  private_link_access     = var.private_link_access
 
   identity_ids              = var.identity_ids
   identity_type             = var.identity_type

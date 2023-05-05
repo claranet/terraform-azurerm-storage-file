@@ -201,3 +201,12 @@ variable "file_share_authentication" {
     error_message = "`file_share_authentication.active_directory` block is required when `file_share_authentication.directory_type` is set to `AD`."
   }
 }
+
+variable "private_link_access" {
+  description = "List of Private Link objects to allow access from."
+  type = list(object({
+    endpoint_resource_id = string
+    endpoint_tenant_id   = optional(string, null)
+  }))
+  default = []
+}
