@@ -203,7 +203,7 @@ variable "file_share_authentication" {
 }
 
 variable "private_link_access" {
-  description = "List of Privatelink objects to allow access from."
+  description = "List of Private Link objects to allow access from."
   type = list(object({
     endpoint_resource_id = string
     endpoint_tenant_id   = optional(string, null)
