@@ -1,6 +1,6 @@
 module "storage_account" {
   source  = "claranet/storage-account/azurerm"
-  version = "~> 7.6.0"
+  version = "~> 7.10.0"
 
   location       = var.location
   location_short = var.location_short
@@ -18,7 +18,6 @@ module "storage_account" {
   logs_destinations_ids           = var.logs_destinations_ids
   logs_categories                 = var.logs_categories
   logs_metrics_categories         = var.logs_metrics_categories
-  logs_retention_days             = var.logs_retention_days
   custom_diagnostic_settings_name = var.custom_diagnostic_settings_name
 
   account_kind             = var.is_premium ? "FileStorage" : "StorageV2"
@@ -38,8 +37,10 @@ module "storage_account" {
   queue_properties_logging = null
 
   advanced_threat_protection_enabled = var.advanced_threat_protection_enabled
-  https_traffic_only_enabled         = !contains([for s in var.file_shares : s.enabled_protocol], "NFS") && var.https_traffic_only_enabled
-  min_tls_version                    = var.min_tls_version
+  https_traffic_only_enabled = !contains([
+    for s in var.file_shares : s.enabled_protocol
+  ], "NFS") && var.https_traffic_only_enabled
+  min_tls_version = var.min_tls_version
 
   network_rules_enabled   = var.network_rules_enabled
   default_firewall_action = var.default_firewall_action
