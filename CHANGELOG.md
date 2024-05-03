@@ -1,3 +1,32 @@
+## 7.4.0 (2024-05-03)
+
+
+### Features
+
+* change `storage_blob_cors_rule` to a list, allow multiple cors rules 6e2856a
+
+
+### Continuous Integration
+
+* **AZ-1391:** enable semantic-release [skip ci] 08cb519
+* **AZ-1391:** update semantic-release config [skip ci] 6b2f5af
+
+
+### Miscellaneous Chores
+
+* **deps:** add renovate.json cad935d
+* **deps:** enable automerge on renovate 0436d18
+* **deps:** update dependency claranet/storage-account/azurerm to ~> 7.11.0 b1d44e8
+* **deps:** update dependency opentofu to v1.7.0 0ff9584
+* **deps:** update dependency tflint to v0.51.0 9110b66
+* **deps:** update dependency trivy to v0.50.2 92f945a
+* **deps:** update dependency trivy to v0.50.4 f944c2b
+* **deps:** update renovate.json acab4cf
+* **deps:** update terraform claranet/storage-account/azurerm to ~> 7.10.0 ca0a2c7
+* **deps:** update terraform claranet/storage-account/azurerm to ~> 7.12.0 b3c9161
+* **pre-commit:** update commitlint hook 6938274
+* **release:** remove legacy `VERSION` file 152aa4c
+
 # v7.3.0 - 2023-05-05
 
 Added
