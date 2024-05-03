@@ -32,7 +32,7 @@ module "storage_account" {
   file_share_authentication           = var.file_share_authentication
 
   storage_blob_data_protection = {}
-  storage_blob_cors_rule       = null
+  storage_blob_cors_rules      = []
 
   queue_properties_logging = null
 
