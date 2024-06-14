@@ -145,13 +145,13 @@ EOC
 
 | Name | Version |
 |------|---------|
-| azurerm | ~> 3.39 |
+| azurerm | ~> 3.102 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| storage\_account | claranet/storage-account/azurerm | ~> 7.12.0 |
+| storage\_account | claranet/storage-account/azurerm | ~> 7.13.0 |
 
 ## Resources
 
