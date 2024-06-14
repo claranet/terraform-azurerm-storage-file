@@ -1,3 +1,31 @@
+## 7.4.1 (2024-06-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* bump minimum AzureRM provider version
+
+### Code Refactoring
+
+* module storage requires provider `v3.102+` 28c6aae
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency claranet/storage-account/azurerm to ~> 7.13.0 b4747d5
+* **deps:** update dependency opentofu to v1.7.1 b5fb344
+* **deps:** update dependency opentofu to v1.7.2 7726f04
+* **deps:** update dependency pre-commit to v3.7.1 12505de
+* **deps:** update dependency terraform-docs to v0.18.0 40be2d8
+* **deps:** update dependency tflint to v0.51.1 84a9e55
+* **deps:** update dependency trivy to v0.51.0 bba9b1d
+* **deps:** update dependency trivy to v0.51.1 89f039e
+* **deps:** update dependency trivy to v0.51.2 928a204
+* **deps:** update dependency trivy to v0.51.4 7e07e0d
+* **deps:** update dependency trivy to v0.52.0 f320b72
+* **deps:** update dependency trivy to v0.52.1 376943f
+* **deps:** update dependency trivy to v0.52.2 317965b
+
 ## 7.4.0 (2024-05-03)
 
 
