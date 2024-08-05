@@ -19,11 +19,6 @@ output "storage_account_identity" {
   value       = module.storage_account.storage_account_identity
 }
 
-output "storage_account_network_rules" {
-  description = "Network rules of the associated Storage Account"
-  value       = module.storage_account.storage_account_network_rules
-}
-
 output "storage_file_shares" {
   description = "Created file shares in the Storage Account"
   value       = module.storage_account.storage_file_shares

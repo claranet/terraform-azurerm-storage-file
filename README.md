@@ -210,7 +210,6 @@ EOC
 | storage\_account\_id | Created Storage Account ID |
 | storage\_account\_identity | Created Storage Account identity block |
 | storage\_account\_name | Created Storage Account name |
-| storage\_account\_network\_rules | Network rules of the associated Storage Account |
 | storage\_account\_properties | Created Storage Account properties |
 | storage\_file\_shares | Created file shares in the Storage Account |
 | storage\_file\_shares\_default\_fstab\_entries | Default fstab entries for the file shares |
