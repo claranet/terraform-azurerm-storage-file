@@ -1,3 +1,23 @@
+## 7.4.2 (2024-08-05)
+
+
+### Bug Fixes
+
+* **AZ-1446:** remove `storage_account_network_rules` output 4c647a1
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.7.3 ff9006e
+* **deps:** update dependency pre-commit to v3.8.0 1155c9f
+* **deps:** update dependency tflint to v0.51.2 3855ee6
+* **deps:** update dependency tflint to v0.52.0 e440489
+* **deps:** update dependency trivy to v0.53.0 5ad409d
+* **deps:** update dependency trivy to v0.54.1 b580ac5
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.92.0 3dc8b31
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.92.1 a09a608
+* **deps:** update tools 0a7f756
+
 ## 7.4.1 (2024-06-14)
 
 
