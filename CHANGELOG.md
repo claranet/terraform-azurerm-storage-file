@@ -1,3 +1,17 @@
+## 7.4.3 (2024-08-30)
+
+### Bug Fixes
+
+* bump `storage-account` to latest version 8444104
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.8.1 638f107
+* **deps:** update dependency tflint to v0.53.0 cc804fb
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.17.0 c24cf2e
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.92.2 d09fa02
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.94.0 afdbcf5
+
 ## 7.4.2 (2024-08-05)
 
 
