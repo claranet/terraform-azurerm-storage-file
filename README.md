@@ -37,46 +37,6 @@ More details about variables set by the `terraform-wrapper` available in the [do
 [Hashicorp Terraform](https://github.com/hashicorp/terraform/). Instead, we recommend to use [OpenTofu](https://github.com/opentofu/opentofu/).
 
 ```hcl
-data "http" "ip" {
-  url = "http://ip4.clara.net/?raw"
-}
-
-module "azure_region" {
-  source  = "claranet/regions/azurerm"
-  version = "x.x.x"
-
-  azure_region = var.azure_region
-}
-
-module "rg" {
-  source  = "claranet/rg/azurerm"
-  version = "x.x.x"
-
-  location    = module.azure_region.location
-  client_name = var.client_name
-  environment = var.environment
-  stack       = var.stack
-}
-
-module "run" {
-  source  = "claranet/run/azurerm"
-  version = "x.x.x"
-
-  client_name         = var.client_name
-  environment         = var.environment
-  stack               = var.stack
-  location            = module.azure_region.location
-  location_short      = module.azure_region.location_short
-  resource_group_name = module.rg.resource_group_name
-
-  monitoring_function_enabled = false
-  vm_monitoring_enabled       = false
-  backup_vm_enabled           = false
-  update_center_enabled       = false
-
-  backup_file_share_enabled = true
-}
-
 module "storage_file" {
   source  = "claranet/storage-file/azurerm"
   version = "x.x.x"
@@ -87,16 +47,17 @@ module "storage_file" {
   environment    = var.environment
   stack          = var.stack
 
-  resource_group_name = module.rg.resource_group_name
+  resource_group_name = module.rg.name
 
   account_replication_type = "LRS"
 
   logs_destinations_ids = [
-    module.run.logs_storage_account_id,
-    module.run.log_analytics_workspace_id
+    # module.run.logs_storage_account_id,
+    # module.run.log_analytics_workspace_id
   ]
 
-  backup_policy_id = module.run.file_share_backup_policy_id
+  # backup_policy_id = module.run.file_share_backup_policy_id
+  backup_policy_id = null
 
   allowed_cidrs  = [format("%s/32", data.http.ip.response_body)]
   network_bypass = ["AzureServices"] # Mandatory for backup purpose
@@ -149,20 +110,20 @@ EOC
 
 | Name | Version |
 |------|---------|
-| azurerm | ~> 3.114 |
+| azurerm | ~> 4.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| storage\_account | claranet/storage-account/azurerm | ~> 7.14.0 |
+| storage\_account | claranet/storage-account/azurerm | ~> 8.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [azurerm_backup_container_storage_account.backup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_container_storage_account) | resource |
-| [azurerm_backup_protected_file_share.backup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_protected_file_share) | resource |
+| [azurerm_backup_container_storage_account.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_container_storage_account) | resource |
+| [azurerm_backup_protected_file_share.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_protected_file_share) | resource |
 
 ## Inputs
 
@@ -172,11 +133,12 @@ EOC
 | advanced\_threat\_protection\_enabled | Boolean flag which controls if advanced threat protection is enabled, see [documentation](https://docs.microsoft.com/en-us/azure/storage/common/storage-advanced-threat-protection?tabs=azure-portal) for more information. | `bool` | `false` | no |
 | allowed\_cidrs | List of CIDR to allow access to that Storage Account. | `list(string)` | `[]` | no |
 | backup\_policy\_id | ID of the Recovery Services Vault policy for file share backups. | `string` | n/a | yes |
-| client\_name | Client name/account used in naming | `string` | n/a | yes |
-| custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
+| client\_name | Client name/account used in naming. | `string` | n/a | yes |
+| custom\_name | Custom Azure Storage Account name, generated if not set. | `string` | `""` | no |
 | default\_firewall\_action | Which default firewalling policy to apply. Valid values are `Allow` or `Deny`. | `string` | `"Deny"` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
-| environment | Project environment | `string` | n/a | yes |
+| diagnostic\_settings\_custom\_name | Custom name of the diagnostics settings, name will be `default` if not set. | `string` | `"default"` | no |
+| environment | Project environment. | `string` | n/a | yes |
 | extra\_tags | Additional tags to associate with your Azure Storage Account. | `map(string)` | `{}` | no |
 | file\_share\_authentication | Storage Account file shares authentication configuration. | <pre>object({<br/>    directory_type = string<br/>    active_directory = optional(object({<br/>      storage_sid         = string<br/>      domain_name         = string<br/>      domain_sid          = string<br/>      domain_guid         = string<br/>      forest_name         = string<br/>      netbios_domain_name = string<br/>    }))<br/>  })</pre> | `null` | no |
 | file\_share\_cors\_rules | Storage Account file shares CORS rule. Please refer to the [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#cors_rule) for more information. | <pre>object({<br/>    allowed_headers    = list(string)<br/>    allowed_methods    = list(string)<br/>    allowed_origins    = list(string)<br/>    exposed_headers    = list(string)<br/>    max_age_in_seconds = number<br/>  })</pre> | `null` | no |
@@ -187,38 +149,37 @@ EOC
 | identity\_ids | Specifies a list of User Assigned Managed Identity IDs to be assigned to this Storage Account. | `list(string)` | `null` | no |
 | identity\_type | Specifies the type of Managed Service Identity that should be configured on this Storage Account. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned` (to enable both). | `string` | `"SystemAssigned"` | no |
 | is\_premium | True to enable `Premium` tier for this Storage Account. | `bool` | `true` | no |
-| location | Azure location | `string` | n/a | yes |
-| location\_short | Short string for Azure location | `string` | n/a | yes |
+| location | Azure location. | `string` | n/a | yes |
+| location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
-| logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination.<br/>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br/>If you want to use Azure EventHub as destination, you must provide a formatted string with both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the <code>&#124;</code> character. | `list(string)` | n/a | yes |
+| logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination.<br/>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br/>If you want to use Azure EventHub as a destination, you must provide a formatted string containing both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the <code>&#124;</code> character. | `list(string)` | n/a | yes |
 | logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | min\_tls\_version | The minimum supported TLS version for the Storage Account. Possible values are `TLS1_0`, `TLS1_1`, and `TLS1_2`. | `string` | `"TLS1_2"` | no |
-| name\_prefix | Optional prefix for the generated name | `string` | `""` | no |
-| name\_suffix | Optional suffix for the generated name | `string` | `""` | no |
+| name\_prefix | Optional prefix for the generated name. | `string` | `""` | no |
+| name\_suffix | Optional suffix for the generated name. | `string` | `""` | no |
 | network\_bypass | Specifies whether traffic is bypassed for 'Logging', 'Metrics', 'AzureServices' or 'None'. | `list(string)` | <pre>[<br/>  "Logging",<br/>  "Metrics",<br/>  "AzureServices"<br/>]</pre> | no |
 | network\_rules\_enabled | Boolean to enable Network Rules on the Storage Account, requires `network_bypass`, `allowed_cidrs`, `subnet_ids` or `default_firewall_action` correctly set if enabled. | `bool` | `true` | no |
 | private\_link\_access | List of Private Link objects to allow access from. | <pre>list(object({<br/>    endpoint_resource_id = string<br/>    endpoint_tenant_id   = optional(string, null)<br/>  }))</pre> | `[]` | no |
-| resource\_group\_name | Resource group name | `string` | n/a | yes |
-| shared\_access\_key\_enabled | Indicates whether the Storage Account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). | `bool` | `true` | no |
-| stack | Project stack name | `string` | n/a | yes |
-| storage\_account\_custom\_name | Custom Azure Storage Account name, generated if not set | `string` | `""` | no |
+| resource\_group\_name | Resource group name. | `string` | n/a | yes |
+| shared\_access\_key\_enabled | Indicates whether the Storage Account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). | `bool` | `false` | no |
+| stack | Project stack name. | `string` | n/a | yes |
 | subnet\_ids | Subnets to allow access to that Storage Account. | `list(string)` | `[]` | no |
-| use\_caf\_naming | Use the Azure CAF naming provider to generate default resource name. `storage_account_custom_name` override this if set. Legacy default name is used if this is set to `false`. | `bool` | `true` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| cifs\_credentials\_file\_content | Content of the CIFS credentials file |
-| default\_cifs\_configuration\_file\_path | Default configuration file path for CIFS credentials file |
-| storage\_account\_id | Created Storage Account ID |
-| storage\_account\_identity | Created Storage Account identity block |
-| storage\_account\_name | Created Storage Account name |
-| storage\_account\_properties | Created Storage Account properties |
-| storage\_file\_shares | Created file shares in the Storage Account |
-| storage\_file\_shares\_default\_fstab\_entries | Default fstab entries for the file shares |
-| storage\_file\_shares\_default\_mount\_commands | Default mount commands for the file shares |
-| storage\_file\_shares\_default\_mount\_paths | Default mount paths for the file shares |
-| storage\_file\_shares\_mount\_endpoints | Mount endpoints of created file shares |
-| storage\_file\_shares\_mount\_options | Mount options for the file shares |
+| cifs\_credentials\_file\_content | Content of the CIFS credentials file. |
+| default\_cifs\_configuration\_file\_path | Default configuration file path for CIFS credentials file. |
+| file\_shares | Created file shares in the Storage Account. |
+| file\_shares\_default\_fstab\_entries | Default fstab entries for the file shares. |
+| file\_shares\_default\_mount\_commands | Default mount commands for the file shares. |
+| file\_shares\_default\_mount\_paths | Default mount paths for the file shares. |
+| file\_shares\_mount\_endpoints | Mount endpoints of created file shares. |
+| file\_shares\_mount\_options | Mount options for the file shares. |
+| id | Storage Account ID. |
+| identity\_principal\_id | Storage Account system identity principal ID. |
+| module\_diagnostics | Diagnostics settings module outputs. |
+| name | Storage Account name. |
+| resource | Storage Account resource object. |
 <!-- END_TF_DOCS -->

@@ -1,43 +1,3 @@
-data "http" "ip" {
-  url = "http://ip4.clara.net/?raw"
-}
-
-module "azure_region" {
-  source  = "claranet/regions/azurerm"
-  version = "x.x.x"
-
-  azure_region = var.azure_region
-}
-
-module "rg" {
-  source  = "claranet/rg/azurerm"
-  version = "x.x.x"
-
-  location    = module.azure_region.location
-  client_name = var.client_name
-  environment = var.environment
-  stack       = var.stack
-}
-
-module "run" {
-  source  = "claranet/run/azurerm"
-  version = "x.x.x"
-
-  client_name         = var.client_name
-  environment         = var.environment
-  stack               = var.stack
-  location            = module.azure_region.location
-  location_short      = module.azure_region.location_short
-  resource_group_name = module.rg.resource_group_name
-
-  monitoring_function_enabled = false
-  vm_monitoring_enabled       = false
-  backup_vm_enabled           = false
-  update_center_enabled       = false
-
-  backup_file_share_enabled = true
-}
-
 module "storage_file" {
   source  = "claranet/storage-file/azurerm"
   version = "x.x.x"
@@ -48,16 +8,17 @@ module "storage_file" {
   environment    = var.environment
   stack          = var.stack
 
-  resource_group_name = module.rg.resource_group_name
+  resource_group_name = module.rg.name
 
   account_replication_type = "LRS"
 
   logs_destinations_ids = [
-    module.run.logs_storage_account_id,
-    module.run.log_analytics_workspace_id
+    # module.run.logs_storage_account_id,
+    # module.run.log_analytics_workspace_id
   ]
 
-  backup_policy_id = module.run.file_share_backup_policy_id
+  # backup_policy_id = module.run.file_share_backup_policy_id
+  backup_policy_id = null
 
   allowed_cidrs  = [format("%s/32", data.http.ip.response_body)]
   network_bypass = ["AzureServices"] # Mandatory for backup purpose

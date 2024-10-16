@@ -1,6 +1,6 @@
 module "storage_account" {
   source  = "claranet/storage-account/azurerm"
-  version = "~> 7.14.0"
+  version = "~> 8.0"
 
   location       = var.location
   location_short = var.location_short
@@ -10,15 +10,14 @@ module "storage_account" {
 
   resource_group_name = var.resource_group_name
 
-  use_caf_naming              = var.use_caf_naming
-  name_prefix                 = var.name_prefix
-  name_suffix                 = var.name_suffix
-  storage_account_custom_name = var.storage_account_custom_name
+  name_prefix = var.name_prefix
+  name_suffix = var.name_suffix
+  custom_name = var.custom_name
 
   logs_destinations_ids           = var.logs_destinations_ids
   logs_categories                 = var.logs_categories
   logs_metrics_categories         = var.logs_metrics_categories
-  custom_diagnostic_settings_name = var.custom_diagnostic_settings_name
+  diagnostic_settings_custom_name = var.diagnostic_settings_custom_name
 
   account_kind             = var.is_premium ? "FileStorage" : "StorageV2"
   account_tier             = var.is_premium ? "Premium" : "Standard"

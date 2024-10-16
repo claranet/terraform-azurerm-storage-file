@@ -1,5 +1,10 @@
-resource "azurerm_backup_container_storage_account" "backup" {
-  for_each = toset(var.backup_policy_id != null ? ["enabled"] : [])
+moved {
+  from = azurerm_backup_container_storage_account.backup["enabled"]
+  to   = azurerm_backup_container_storage_account.main[0]
+}
+
+resource "azurerm_backup_container_storage_account" "main" {
+  count = var.backup_policy_id != null ? 1 : 0
 
   recovery_vault_name = local.backup_vault_name
   resource_group_name = local.backup_vault_rg
@@ -13,7 +18,12 @@ resource "azurerm_backup_container_storage_account" "backup" {
   }
 }
 
-resource "azurerm_backup_protected_file_share" "backup" {
+moved {
+  from = azurerm_backup_protected_file_share.backup
+  to   = azurerm_backup_protected_file_share.main
+}
+
+resource "azurerm_backup_protected_file_share" "main" {
   for_each = toset(var.backup_policy_id != null ? [for s in var.file_shares : s.name if s.enabled_protocol != "NFS"] : [])
 
   backup_policy_id          = var.backup_policy_id
