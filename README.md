@@ -94,14 +94,14 @@ apt install -o DPkg::Lock::Timeout=120 -y nfs-common cifs-utils
 mkdir -p $(dirname ${module.storage_file.default_cifs_configuration_file_path})
 echo "${module.storage_file.cifs_credentials_file_content}"  > ${module.storage_file.default_cifs_configuration_file_path}
 
-mkdir -p ${module.storage_file.storage_file_shares_default_mount_paths["share-smb"]}
-mkdir -p ${module.storage_file.storage_file_shares_default_mount_paths["share-nfs"]}
+mkdir -p ${module.storage_file.file_shares_default_mount_paths["share-smb"]}
+mkdir -p ${module.storage_file.file_shares_default_mount_paths["share-nfs"]}
 
-echo "${module.storage_file.storage_file_shares_default_fstab_entries["share-smb"]}" >> /etc/fstab
-echo "${module.storage_file.storage_file_shares_default_fstab_entries["share-nfs"]}" >> /etc/fstab
+echo "${module.storage_file.file_shares_default_fstab_entries["share-smb"]}" >> /etc/fstab
+echo "${module.storage_file.file_shares_default_fstab_entries["share-nfs"]}" >> /etc/fstab
 
-mount ${module.storage_file.storage_file_shares_default_mount_paths["share-smb"]}
-mount ${module.storage_file.storage_file_shares_default_mount_paths["share-nfs"]}}
+mount ${module.storage_file.file_shares_default_mount_paths["share-smb"]}
+mount ${module.storage_file.file_shares_default_mount_paths["share-nfs"]}}
 EOC
 }
 ```
@@ -142,9 +142,9 @@ EOC
 | extra\_tags | Additional tags to associate with your Azure Storage Account. | `map(string)` | `{}` | no |
 | file\_share\_authentication | Storage Account file shares authentication configuration. | <pre>object({<br/>    directory_type = string<br/>    active_directory = optional(object({<br/>      storage_sid         = string<br/>      domain_name         = string<br/>      domain_sid          = string<br/>      domain_guid         = string<br/>      forest_name         = string<br/>      netbios_domain_name = string<br/>    }))<br/>  })</pre> | `null` | no |
 | file\_share\_cors\_rules | Storage Account file shares CORS rule. Please refer to the [documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#cors_rule) for more information. | <pre>object({<br/>    allowed_headers    = list(string)<br/>    allowed_methods    = list(string)<br/>    allowed_origins    = list(string)<br/>    exposed_headers    = list(string)<br/>    max_age_in_seconds = number<br/>  })</pre> | `null` | no |
-| file\_share\_properties\_smb | Storage Account file shares smb properties. Multichannel is enabled by default on Premium Storage Accounts. | <pre>object({<br/>    versions                        = optional(list(string), null)<br/>    authentication_types            = optional(list(string), null)<br/>    kerberos_ticket_encryption_type = optional(list(string), null)<br/>    channel_encryption_type         = optional(list(string), null)<br/>    multichannel_enabled            = optional(bool, null)<br/>  })</pre> | `null` | no |
+| file\_share\_properties\_smb | Storage Account file shares SMB properties. Multichannel is enabled by default on Premium Storage Accounts. | <pre>object({<br/>    versions                        = optional(list(string), null)<br/>    authentication_types            = optional(list(string), null)<br/>    kerberos_ticket_encryption_type = optional(list(string), null)<br/>    channel_encryption_type         = optional(list(string), null)<br/>    multichannel_enabled            = optional(bool, null)<br/>  })</pre> | `null` | no |
 | file\_share\_retention\_policy\_in\_days | Storage Account file shares retention policy in days. | `number` | `14` | no |
-| file\_shares | List of objects to create some File Shares in this Storage Account. | <pre>list(object({<br/>    name             = string<br/>    quota_in_gb      = number<br/>    enabled_protocol = optional(string)<br/>    metadata         = optional(map(string))<br/>    acl = optional(list(object({<br/>      id          = string<br/>      permissions = string<br/>      start       = optional(string)<br/>      expiry      = optional(string)<br/>    })))<br/>  }))</pre> | n/a | yes |
+| file\_shares | List of objects to create some File Shares in this Storage Account. | <pre>list(object({<br/>    name             = string<br/>    quota_in_gb      = number<br/>    protocol_enabled = optional(string)<br/>    metadata         = optional(map(string))<br/>    acl = optional(list(object({<br/>      id          = string<br/>      permissions = string<br/>      start       = optional(string)<br/>      expiry      = optional(string)<br/>    })))<br/>  }))</pre> | n/a | yes |
 | https\_traffic\_only\_enabled | Boolean flag which forces HTTPS if enabled. Disabled if any NFS file share is provisioned. | `bool` | `true` | no |
 | identity\_ids | Specifies a list of User Assigned Managed Identity IDs to be assigned to this Storage Account. | `list(string)` | `null` | no |
 | identity\_type | Specifies the type of Managed Service Identity that should be configured on this Storage Account. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned` (to enable both). | `string` | `"SystemAssigned"` | no |

@@ -30,14 +30,14 @@ module "storage_account" {
   file_share_properties_smb           = local.smb_properties
   file_share_authentication           = var.file_share_authentication
 
-  storage_blob_data_protection = {}
-  storage_blob_cors_rules      = []
+  blob_data_protection = {}
+  blob_cors_rules      = []
 
   queue_properties_logging = null
 
   advanced_threat_protection_enabled = var.advanced_threat_protection_enabled
   https_traffic_only_enabled = !contains([
-    for s in var.file_shares : s.enabled_protocol
+    for s in var.file_shares : s.protocol_enabled
   ], "NFS") && var.https_traffic_only_enabled
   min_tls_version = var.min_tls_version
 

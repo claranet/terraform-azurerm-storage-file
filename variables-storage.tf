@@ -100,7 +100,7 @@ variable "file_shares" {
   type = list(object({
     name             = string
     quota_in_gb      = number
-    enabled_protocol = optional(string)
+    protocol_enabled = optional(string)
     metadata         = optional(map(string))
     acl = optional(list(object({
       id          = string
@@ -131,7 +131,7 @@ variable "file_share_retention_policy_in_days" {
 }
 
 variable "file_share_properties_smb" {
-  description = "Storage Account file shares smb properties. Multichannel is enabled by default on Premium Storage Accounts."
+  description = "Storage Account file shares SMB properties. Multichannel is enabled by default on Premium Storage Accounts."
   type = object({
     versions                        = optional(list(string), null)
     authentication_types            = optional(list(string), null)
