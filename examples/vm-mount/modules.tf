@@ -13,41 +13,44 @@ module "rg" {
   source  = "claranet/rg/azurerm"
   version = "x.x.x"
 
-  location    = module.azure_region.location
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+
   client_name = var.client_name
   environment = var.environment
   stack       = var.stack
 }
 
-module "logs" {
-  source  = "claranet/run/azurerm//modules/logs"
-  version = "x.x.x"
 
-  client_name         = var.client_name
-  environment         = var.environment
-  stack               = var.stack
-  location            = module.azure_region.location
-  location_short      = module.azure_region.location_short
-  resource_group_name = module.rg.resource_group_name
-}
+# module "logs" {
+#   source  = "claranet/run/azurerm//modules/logs"
+#   version = "x.x.x"
 
-module "backup" {
-  source  = "claranet/run-iaas/azurerm//modules/backup"
-  version = "x.x.x"
+#   client_name         = var.client_name
+#   environment         = var.environment
+#   stack               = var.stack
+#   location            = module.azure_region.location
+#   location_short      = module.azure_region.location_short
+#   resource_group_name = module.rg.name
+# }
 
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  client_name    = var.client_name
-  environment    = var.environment
-  stack          = var.stack
+# module "backup" {
+#   source  = "claranet/run-iaas/azurerm//modules/backup"
+#   version = "x.x.x"
 
-  resource_group_name = module.rg.resource_group_name
+#   location       = module.azure_region.location
+#   location_short = module.azure_region.location_short
+#   client_name    = var.client_name
+#   environment    = var.environment
+#   stack          = var.stack
 
-  logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
-  ]
-}
+#   resource_group_name = module.rg.name
+
+#   logs_destinations_ids = [
+#     module.logs.logs_storage_account_id,
+#     module.logs.log_analytics_workspace_id
+#   ]
+# }
 
 module "storage_file" {
   source  = "claranet/storage-file/azurerm"
@@ -59,16 +62,17 @@ module "storage_file" {
   environment    = var.environment
   stack          = var.stack
 
-  resource_group_name = module.rg.resource_group_name
+  resource_group_name = module.rg.name
 
   account_replication_type = "LRS"
 
   logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+    # module.logs.logs_storage_account_id,
+    # module.logs.log_analytics_workspace_id
   ]
 
-  backup_policy_id = module.backup.file_share_backup_policy_id
+  # backup_policy_id = module.backup.file_share_backup_policy_id
+  backup_policy_id = null
 
   allowed_cidrs  = [format("%s/32", data.http.ip.response_body)]
   network_bypass = ["AzureServices"] # Mandatory for backup purpose
@@ -105,13 +109,13 @@ apt install -o DPkg::Lock::Timeout=120 -y nfs-common cifs-utils
 mkdir -p $(dirname ${module.storage_file.default_cifs_configuration_file_path})
 echo "${module.storage_file.cifs_credentials_file_content}"  > ${module.storage_file.default_cifs_configuration_file_path}
 
-mkdir -p ${module.storage_file.storage_file_shares_default_mount_paths["share-smb"]}
-mkdir -p ${module.storage_file.storage_file_shares_default_mount_paths["share-nfs"]}
+mkdir -p ${module.storage_file.file_shares_default_mount_paths["share-smb"]}
+mkdir -p ${module.storage_file.file_shares_default_mount_paths["share-nfs"]}
 
-echo "${module.storage_file.storage_file_shares_default_fstab_entries["share-smb"]}" >> /etc/fstab
-echo "${module.storage_file.storage_file_shares_default_fstab_entries["share-nfs"]}" >> /etc/fstab
+echo "${module.storage_file.file_shares_default_fstab_entries["share-smb"]}" >> /etc/fstab
+echo "${module.storage_file.file_shares_default_fstab_entries["share-nfs"]}" >> /etc/fstab
 
-mount ${module.storage_file.storage_file_shares_default_mount_paths["share-smb"]}
-mount ${module.storage_file.storage_file_shares_default_mount_paths["share-nfs"]}}
+mount ${module.storage_file.file_shares_default_mount_paths["share-smb"]}
+mount ${module.storage_file.file_shares_default_mount_paths["share-nfs"]}}
 EOC
 }
