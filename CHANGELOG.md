@@ -1,3 +1,21 @@
+## 8.0.2 (2025-01-14)
+
+### Bug Fixes
+
+* variable file_shares (use enabled_protocol instead of protocol_enabled) c5be40e
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.8.6 2145702
+* **deps:** update dependency opentofu to v1.8.8 3e0ac3d
+* **deps:** update dependency opentofu to v1.9.0 f4f735c
+* **deps:** update dependency tflint to v0.55.0 7b2c230
+* **deps:** update dependency trivy to v0.58.1 d3ca69b
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.19.0 9764924
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.20.0 313da3d
+* **deps:** update tools ba31984
+* update tflint config for v0.55.0 b9e1dec
+
 ## 8.0.1 (2024-11-21)
 
 ### Bug Fixes
