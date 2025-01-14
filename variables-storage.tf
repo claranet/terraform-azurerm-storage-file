@@ -100,7 +100,7 @@ variable "file_shares" {
   type = list(object({
     name             = string
     quota_in_gb      = number
-    protocol_enabled = optional(string)
+    enabled_protocol = optional(string)
     metadata         = optional(map(string))
     acl = optional(list(object({
       id          = string

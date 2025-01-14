@@ -24,7 +24,7 @@ moved {
 }
 
 resource "azurerm_backup_protected_file_share" "main" {
-  for_each = toset(var.backup_policy_id != null ? [for s in var.file_shares : s.name if s.protocol_enabled != "NFS"] : [])
+  for_each = toset(var.backup_policy_id != null ? [for s in var.file_shares : s.name if s.enabled_protocol != "NFS"] : [])
 
   backup_policy_id          = var.backup_policy_id
   recovery_vault_name       = local.backup_vault_name
