@@ -1,3 +1,34 @@
+## 8.0.3 (2025-05-23)
+
+### Bug Fixes
+
+* **deps:** 🐛 bump module dependencies 🔗 c5e6217
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.9.1 26989c7
+* **deps:** update dependency pre-commit to v4.1.0 05f560b
+* **deps:** update dependency pre-commit to v4.2.0 e5ba85e
+* **deps:** update dependency terraform-docs to v0.20.0 3a81d30
+* **deps:** update dependency tflint to v0.55.1 f15d81a
+* **deps:** update dependency tflint to v0.57.0 a82e89e
+* **deps:** update dependency trivy to v0.58.2 ed3d742
+* **deps:** update dependency trivy to v0.59.0 abb5a9a
+* **deps:** update dependency trivy to v0.59.1 421abb9
+* **deps:** update dependency trivy to v0.60.0 2140213
+* **deps:** update dependency trivy to v0.61.1 8d6f533
+* **deps:** update dependency trivy to v0.62.0 6416710
+* **deps:** update dependency trivy to v0.62.1 fd72c89
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.21.0 1479c34
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.22.0 bc15aac
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.2.0 b2731b4
+* **deps:** update terraform claranet/storage-account/azurerm to ~> 8.3.0 c5eca3d
+* **deps:** update terraform claranet/storage-account/azurerm to ~> 8.4.0 2fa9fa1
+* **deps:** update terraform claranet/storage-account/azurerm to ~> 8.5.0 63bf8ea
+* **deps:** update terraform claranet/storage-account/azurerm to ~> 8.6.0 0071aa2
+* **deps:** update tools 0e3b98e
+* update Github templates 46dc770
+
 ## 8.0.2 (2025-01-14)
 
 ### Bug Fixes
