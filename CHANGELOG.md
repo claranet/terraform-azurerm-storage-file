@@ -2,7 +2,7 @@
 
 ### Bug Fixes
 
-* variable file_shares (use enabled_protocol instead of protocol_enabled) c5be40e
+* variable `file_shares` (use `enabled_protocol` instead of `protocol_enabled`) c5be40e
 
 ### Miscellaneous Chores
 
