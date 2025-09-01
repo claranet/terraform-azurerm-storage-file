@@ -1,3 +1,28 @@
+## 8.0.4 (2025-09-01)
+
+### Bug Fixes
+
+* **deps:** 🐛 bump module dependencies 🔗 ae9abba
+
+### Miscellaneous Chores
+
+* **⚙️:** ✏️ update template identifier for MR review 8a5d14c
+* 🗑️ remove old commitlint configuration files af56b09
+* **deps:** 🔗 bump AzureRM provider 9b88273
+* **deps:** update dependency opentofu to v1.10.0 a6e3e3e
+* **deps:** update dependency opentofu to v1.10.1 824dba5
+* **deps:** update dependency opentofu to v1.10.3 c58b1d2
+* **deps:** update dependency tflint to v0.58.0 7a90a97
+* **deps:** update dependency tflint to v0.58.1 39f337b
+* **deps:** update dependency tflint to v0.59.1 8f7b15e
+* **deps:** update dependency trivy to v0.63.0 b1a9a9c
+* **deps:** update pre-commit hook pre-commit/pre-commit-hooks to v6 d12c768
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.2.1 a829bcc
+* **deps:** update tools e697f7d
+* **deps:** update tools de94bbd
+* **deps:** update tools 4888509
+* merge remote-tracking branch 'origin/renovate/tools' 12bfc34
+
 ## 8.0.3 (2025-05-23)
 
 ### Bug Fixes
