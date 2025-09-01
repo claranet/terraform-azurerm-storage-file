@@ -116,7 +116,7 @@ EOC
 
 | Name | Source | Version |
 |------|--------|---------|
-| storage\_account | claranet/storage-account/azurerm | ~> 8.6.0 |
+| storage\_account | claranet/storage-account/azurerm | ~> 8.6.3 |
 
 ## Resources
 
