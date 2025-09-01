@@ -110,7 +110,7 @@ EOC
 
 | Name | Version |
 |------|---------|
-| azurerm | ~> 4.9 |
+| azurerm | ~> 4.31 |
 
 ## Modules
 
