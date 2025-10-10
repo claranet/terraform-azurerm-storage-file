@@ -1,3 +1,17 @@
+## 8.0.5 (2025-10-10)
+
+### Documentation
+
+* 📚️ update module examples 94b81c3
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.10.6 415e150
+* **deps:** update dependency trivy to v0.66.0 41f8a02
+* **deps:** update dependency trivy to v0.67.0 91b4596
+* **deps:** update dependency trivy to v0.67.1 b97ac8d
+* merge remote-tracking branch 'origin/renovate/tools' 4b5563f
+
 ## 8.0.4 (2025-09-01)
 
 ### Bug Fixes
