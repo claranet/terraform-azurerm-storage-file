@@ -109,26 +109,26 @@ EOC
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | azurerm | ~> 4.31 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | storage\_account | claranet/storage-account/azurerm | ~> 8.6.3 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azurerm_backup_container_storage_account.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_container_storage_account) | resource |
 | [azurerm_backup_protected_file_share.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/backup_protected_file_share) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | account\_replication\_type | Defines the type of replication to use for this Storage Account. Valid options are `LRS`, `GRS`, `RAGRS`, `ZRS`, `GZRS` and `RAGZRS`. | `string` | `"ZRS"` | no |
 | advanced\_threat\_protection\_enabled | Boolean flag which controls if advanced threat protection is enabled, see [documentation](https://docs.microsoft.com/en-us/azure/storage/common/storage-advanced-threat-protection?tabs=azure-portal) for more information. | `bool` | `false` | no |
 | allowed\_cidrs | List of CIDR to allow access to that Storage Account. | `list(string)` | `[]` | no |
@@ -168,7 +168,7 @@ EOC
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | cifs\_credentials\_file\_content | Content of the CIFS credentials file. |
 | default\_cifs\_configuration\_file\_path | Default configuration file path for CIFS credentials file. |
 | file\_shares | Created file shares in the Storage Account. |
