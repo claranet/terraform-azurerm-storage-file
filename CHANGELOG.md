@@ -1,3 +1,19 @@
+## 8.0.9 (2026-07-20)
+
+### Bug Fixes
+
+* **tflint:** 🐛 bump Azure rules version, fix signature bug 6ad1dfa
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.12.1 326a5cf
+* **deps:** update dependency opentofu to v1.12.2 35b71e2
+* **deps:** update dependency opentofu to v1.12.3 7ead23d
+* **deps:** update dependency opentofu to v1.12.4 bd6acce
+* **deps:** update dependency tflint to v0.63.1 36b8047
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.4.1 b524c67
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.4.2 45ce003
+
 ## 8.0.8 (2026-06-02)
 
 ### Bug Fixes
