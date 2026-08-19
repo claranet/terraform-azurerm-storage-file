@@ -111,13 +111,13 @@ EOC
 
 | Name | Version |
 | ---- | ------- |
-| azurerm | ~> 4.31 |
+| azurerm | ~> 5.0 |
 
 ## Modules
 
 | Name | Source | Version |
 | ---- | ------ | ------- |
-| storage\_account | claranet/storage-account/azurerm | ~> 8.6.3 |
+| storage\_account | claranet/storage-account/azurerm | ~> 9.0 |
 
 ## Resources
 
